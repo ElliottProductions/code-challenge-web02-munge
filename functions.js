@@ -5,7 +5,8 @@ Output:
 
 export function greetUsers(customers) {
      // just map over them to make a greeting
-    return true;
+    const response = customers.map(customer => `Hello ${customer.first_name} ${customer.last_name}!`);
+    return response;
 }
 
 /* 
@@ -14,7 +15,12 @@ Output:
 */
 
 export function greetUsersOverAge60(customers) {
-    return customers
+
+    const oldCustomers = customers.filter(customer => customer.age > 60);
+    const response = oldCustomers.map(customer => `Hello ${customer.first_name} ${customer.last_name}!`);
+
+
+    return response;
         // first, filter over the user to get the ones over 60
         // then map over them to make a greeting
 }
@@ -27,7 +33,12 @@ Output:
 
 export function addAllAges(customers) {
     // reduce through the customers to make a sum
-    return true;
+
+    const sum = customers.reduce((accumulator, curCustomer) => accumulator + curCustomer.age, 0);
+
+    return sum;
+    
+    
 }
 
 /* 
@@ -39,7 +50,10 @@ export function getAverageCoolFactor(customers) {
     // map through to make an array of cool factors
     // then reduce through that array to get a sum
     // then divide by the total number of customers
-    return true;
+    const coolSum = customers.reduce((accumulator, curCustomer) => accumulator + curCustomer.cool_factor, 0);
+    const coolAvg = coolSum / customers.length;
+
+    return coolAvg;
 }
 
 /* 
@@ -53,8 +67,19 @@ Output:
 */
 
 export function getTotalOfEachGender(customers) {
-    return true;
+    const countMap = {};
+
+    for(let gender of customers) {
+        if(countMap[gender.gender]) {
+            countMap[gender.gender]++;
+        } else {
+            countMap[gender.gender] = 1;
+        }
+    }
+    return countMap;
+
 }
+
 
 /* 
 Output: 
@@ -67,7 +92,18 @@ Output:
 */
 
 export function getGenderBreakdownOfFordOwners(customers) {
-    return true;
+    const fordOwners = customers.filter(customer => customer.car_make === 'Ford');
+
+    const countMap = {};
+
+    for(let gender of fordOwners) {
+        if(countMap[gender.gender]) {
+            countMap[gender.gender]++;
+        } else {
+            countMap[gender.gender] = 1;
+        }
+    }
+    return countMap;
 }
 
 /* 
@@ -88,7 +124,26 @@ Output:
 */
 
 export function getGenderBreakdownOfEachCar(customers) {
-    return true;
+    const carMakeArr = {};
+    
+
+    for(let owner of customers) {
+        
+        if(carMakeArr[owner.car_make]){
+            if(carMakeArr[owner.car_make][owner.gender]) {
+                carMakeArr[owner.car_make][owner.gender]++;
+            } else {
+                carMakeArr[owner.car_make][owner.gender] = 1;
+            }
+        } else {
+            carMakeArr[owner.car_make] = {};
+            carMakeArr[owner.car_make][owner.gender] = 1;
+        }
+            
+        
+    }
+
+    return carMakeArr;
 }
 
 /* 
@@ -103,7 +158,19 @@ Output:
 
 
 export function getAllCoolFactorsOfEachCar(customers) {
-    return true;
+    const coolCars = {};
+
+    for(let car of customers) {
+        if(coolCars[car.car_make]){
+            coolCars[car.car_make].push(car.cool_factor);
+        } else {
+            coolCars[car.car_make] = [];
+            coolCars[car.car_make].push(car.cool_factor);
+
+        }
+    }
+
+    return coolCars;
 }
 
 /////////////////////////////// STRETCH GOALS ///////////////////////////////////////
